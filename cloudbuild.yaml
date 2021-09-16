@@ -57,4 +57,4 @@ steps:
       - --filename=deployment.yaml
       - --image=gcr.io/$PROJECT_ID/spring-hello:latest
       - --location=us-central1
-      - --cluster=qwiklabs-gcp-03-7166acc65dae-gke
+      - --cluster=cluster-1
