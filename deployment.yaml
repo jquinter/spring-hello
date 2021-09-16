@@ -22,7 +22,7 @@ apiVersion: apps/v1
               secretName: example-secret
         containers:
           - name: example-app
-            image: gcr.io/$PROJECT_ID/spring-hello:latest
+            image: gcr.io/qwiklabs-gcp-03-7166acc65dae/spring-hello:latest
             imagePullPolicy: "Always"
             volumeMounts:
               - name: sql-volume
