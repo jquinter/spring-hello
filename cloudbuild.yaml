@@ -28,7 +28,7 @@ steps:
     id: Push
     args:
       - 'push'
-      - 'gcr.io/$PROJECT_ID/spring-hello:$SHORT_SHA'
+      - 'gcr.io/$PROJECT_ID/spring-hello:latest'
 
     # generates the new manifest
     #the entrypoint in a build step to specify an entrypoint if you don't want to use the default entrypoint of the builder.
