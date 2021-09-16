@@ -55,7 +55,7 @@ apiVersion: apps/v1
                   secretKeyRef:
                     name: sql-db-secret
                     key: database
-  ---
+---
   kind: Service
   apiVersion: v1
   metadata:

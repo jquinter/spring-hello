@@ -44,17 +44,17 @@ steps:
 
     # deploys the new version of our container image in the Kubernetes Engine cluster.
     #The env takes a list of environment variables to be used when running the step. The are KEY=VALUE.
-#  - name: 'gcr.io/cloud-builders/kubectl'
-#    id: Deploy
-#    args: ['apply' , '-f' , 'deployment.yaml']
-#    env:
-#      - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
-#      - 'CLOUDSDK_CONTAINER_CLUSTER=qwiklabs-gcp-03-7166acc65dae-gke'
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: Deploy
+    args: ['apply' , '-f' , 'deployment.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=qwiklabs-gcp-03-7166acc65dae-gke'
 
-  - name: "gcr.io/cloud-builders/gke-deploy"
-    args:
-      - run
-      - --filename=deployment.yaml
-      - --image=gcr.io/$PROJECT_ID/spring-hello:latest
-      - --location=us-central1
-      - --cluster=qwiklabs-gcp-03-7166acc65dae-gke
+#  - name: "gcr.io/cloud-builders/gke-deploy"
+#    args:
+#      - run
+#      - --filename=deployment.yaml
+#      - --image=gcr.io/$PROJECT_ID/spring-hello:latest
+#      - --location=us-central1
+#      - --cluster=qwiklabs-gcp-03-7166acc65dae-gke
