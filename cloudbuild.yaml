@@ -48,5 +48,5 @@ steps:
     id: Deploy
     args: ['apply' , '-f' , 'deployment.yaml']
     env:
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a/us-central1'
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
       - 'CLOUDSDK_CONTAINER_CLUSTER=qwiklabs-gcp-03-7166acc65dae-gke'
