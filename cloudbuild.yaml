@@ -2,11 +2,11 @@
 #id field to set a unique identifier for a build step.
 # <github_repository> is the name of the gethub repository to be clone
 #args take a list of arguments
+#
 steps:
   - name: 'gcr.io/cloud-builders/git'
     id: 'Clone'
     args: ['clone', 'https://github.com/rui-s-costa/spring-hello.git']
-
 
   #builds the container image.
 
