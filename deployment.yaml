@@ -17,11 +17,19 @@ spec:
           image: gcr.io/qwiklabs-gcp-03-7166acc65dae/spring-hello:latest
           ports:
             - containerPort: 8080
-          readinessProbe:
-            httpGet:
-              path: /ping
-              port: 8080
-            periodSeconds: 10
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 10
+---
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: example-app-service
+    labels:
+      name: example-app-service
+  spec:
+    ports:
+      - port: 8080
+        targetPort: 8080
+        protocol: TCP
+    type: LoadBalancer
+    selector:
+      app: springboot-example
+      version: "1.0"
