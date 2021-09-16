@@ -1,46 +1,30 @@
-apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: example-app-deployment
-  spec:
-    selector:
-      matchLabels:
-        app:  example-app
-    #number of replicas
-    replicas: 2
-    template:
-      metadata:
-        labels:
-          app: example-app
-          version: "1.0"
-      spec:
-        containers:
-          - name: example-app
-            image: gcr.io/qwiklabs-gcp-03-7166acc65dae/spring-hello:latest
-            imagePullPolicy: "Always"
-            readinessProbe:
-              tcpSocket:
-                port: 8080
-              initialDelaySeconds: 5
-            livenessProbe:
-              initialDelaySeconds: 5
-              tcpSocket:
-                port: 8080
-            ports:
-              - containerPort: 8080
----
-  kind: Service
-  apiVersion: v1
-  metadata:
-    name: example-app-service
-    labels:
-      name: example-app-service
-  spec:
-    ports:
-      - port: 8080
-        targetPort: 8080
-        protocol: TCP
-    type: LoadBalancer
-    selector:
-      app: example-app
-      version: "1.0"
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: k8scale-springboot-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-example
+  template:
+    metadata:
+      labels:
+        app: springboot-example
+    spec:
+      containers:
+        - name: springboot-example
+          image: gcr.io/qwiklabs-gcp-03-7166acc65dae/spring-hello:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 10
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
