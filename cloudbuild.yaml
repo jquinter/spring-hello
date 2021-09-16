@@ -1,0 +1,49 @@
+# Clone the git repo.
+#id field to set a unique identifier for a build step.
+# <github_repository> is the name of the gethub repository to be clone
+#args take a list of arguments
+steps:
+  - name: 'gcr.io/cloud-builders/git'
+    id: 'Clone'
+    args: ['clone', 'https://github.com/rui-s-costa/spring-hello.git']
+
+  #builds the container image.
+  #build is the entrypoint to the Docker cloud builder
+  #-t is the Docker tag
+  #<preffered_image_name> is the name of the image to be built
+  #. is the location of the source code
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/spring-hello:$SHORT_SHA'
+      - '.'
+  # pushes the image to Container Registry
+  # The PROJECT_ID and SHORT_SHA variables are automatically replaced by Cloud Build.
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Push
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/spring-hello:$SHORT_SHA'
+
+    # generates the new manifest
+    #the entrypoint in a build step to specify an entrypoint if you don't want to use the default entrypoint of the builder.
+    #If you don't set this field, Cloud Build will use the builder's entrypoint.
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Generate manifest
+    entrypoint: /bin/sh
+    args:
+      - '-c'
+      - |
+        sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" deployment.yaml.tpl | \
+        sed "s/latest/${SHORT_SHA}/g" > deployment.yaml
+
+    # deploys the new version of our container image in the Kubernetes Engine cluster.
+    #The env takes a list of environment variables to be used when running the step. The are KEY=VALUE.
+  - name: 'gcr.io/cloud-builders/kubectl'
+    id: Deploy
+    args: ['apply' , '-f' , 'deployment.yaml']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a/us-central1'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=qwiklabs-gcp-03-7166acc65dae-gke'
