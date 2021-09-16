@@ -1,3 +1,33 @@
+apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: example-app-deployment
+  spec:
+    selector:
+      matchLabels:
+        app:  example-app
+    #number of replicas
+    replicas: 2
+    template:
+      metadata:
+        labels:
+          app: example-app
+          version: "1.0"
+      spec:
+        containers:
+          - name: example-app
+            image: gcr.io/qwiklabs-gcp-03-7166acc65dae/spring-hello:latest
+            imagePullPolicy: "Always"
+            readinessProbe:
+              tcpSocket:
+                port: 8080
+              initialDelaySeconds: 5
+            livenessProbe:
+              initialDelaySeconds: 5
+              tcpSocket:
+                port: 8080
+            ports:
+              - containerPort: 8080
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
