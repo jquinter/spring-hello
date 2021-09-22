@@ -18,12 +18,12 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args: [ 'build', '-t', 'gcr.io/qwiklabs-gcp-02-bea1b946eb90/spring-hello:latest', '--build-arg=JAR_FILE=target/*.jar', '.' ]
 
-#  # pushes the image to Container Registry
-#  - name: 'gcr.io/cloud-builders/docker'
-#    id: Push
-#    args:
-#      - 'push'
-#      - 'gcr.io/$PROJECT_ID/spring-hello:latest'
+ # pushes the image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Push
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/spring-hello:latest'
 
   - name: "gcr.io/cloud-builders/gke-deploy"
     args:
