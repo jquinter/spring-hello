@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: springboot-example
-          image: gcr.io/qwiklabs-gcp-03-7166acc65dae/spring-hello:latest
+          image: gcr.io/qwiklabs-gcp-02-bea1b946eb90/spring-hello:latest
           ports:
             - containerPort: 8080
 ---

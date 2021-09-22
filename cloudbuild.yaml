@@ -16,7 +16,7 @@ steps:
     args: ['package','-Dmaven.test.skip=true']
 
   - name: gcr.io/cloud-builders/docker
-    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/spring-hello:latest', '--build-arg=JAR_FILE=target/demo-0.0.1-SNAPSHOT.jar', '.' ]
+    args: [ 'build', '-t', 'gcr.io/qwiklabs-gcp-02-bea1b946eb90/spring-hello:latest', '--build-arg=JAR_FILE=target/demo-0.0.1-SNAPSHOT.jar', '.' ]
 
 #  # pushes the image to Container Registry
 #  - name: 'gcr.io/cloud-builders/docker'
@@ -29,6 +29,6 @@ steps:
     args:
       - run
       - --filename=deployment.yaml
-      - --image=gcr.io/$PROJECT_ID/spring-hello:latest
+      - --image=gcr.io/qwiklabs-gcp-02-bea1b946eb90/spring-hello:latest
       - --location=us-central1
-      - --cluster=qwiklabs-gcp-03-7166acc65dae-gke
+      - --cluster=qwiklabs-gcp-02-bea1b946eb90-gke

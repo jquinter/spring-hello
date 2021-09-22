@@ -25,7 +25,9 @@ public class DemoApplication {
 		}
 		catch (UnknownHostException ex) {
 			host = "unknown";
-		}
+        }
+    
+
 		return String.format("Hello %s,  your Application is running on: %s", name ,  host);
 	}
 }
